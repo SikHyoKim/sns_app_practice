@@ -15,7 +15,7 @@ const Home = () => {
   const {width} = Dimensions.get('window');
   const [isClicked, setIsClicked] = useState(dummy_feed);
   const renderItem = ({item, index}) => {
-    const detailItemClick = (clickedId) => {
+    const detailItemClick = clickedId => {
       const selectedItem = dummy_feed.find(item => item.id === clickedId);
       navigation.replace('Detailfeed', {selectedItem});
     };

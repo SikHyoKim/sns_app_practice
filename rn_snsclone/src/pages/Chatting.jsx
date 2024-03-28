@@ -3,7 +3,7 @@ import {SafeAreaView, Text, View} from 'react-native';
 
 const Chatting = () => {
   return (
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={{flex: 1}}>
       <View>
         <Text> Chatting</Text>
       </View>

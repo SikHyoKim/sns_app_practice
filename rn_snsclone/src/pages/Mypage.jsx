@@ -3,7 +3,7 @@ import {SafeAreaView, Text, View} from 'react-native';
 
 const Mypage = () => {
   return (
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={{flex: 1}}>
       <View>
         <Text>Mypage</Text>
       </View>

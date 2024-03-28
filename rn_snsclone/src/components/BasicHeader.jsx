@@ -1,17 +1,48 @@
-import React from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  TextInput,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 const leftArrow = require('../assets/icons/basicheader/leftArrow.png');
+const xIcon = require('../assets/icons/search/close.png');
 
-const BasicHeader = ({title}) => {
+const BasicHeader = ({title, enableSearch}) => {
   const navigation = useNavigation();
+  const [text, setText] = useState('');
   return (
     <View style={styles.headerWrapper}>
       <TouchableOpacity onPress={() => navigation.replace('MainTab')}>
         <Image style={styles.leftArrowIcons} source={leftArrow} />
       </TouchableOpacity>
-      <Text style={styles.headerTitle}>{title}</Text>
+      {enableSearch ? (
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <TextInput
+            placeholder="검색"
+            style={styles.SearchTextInput}
+            value={text}
+            onChange={setText}
+          />
+          <TouchableOpacity
+            onPress={() => setText('')}
+            style={{position: 'absolute', right: 10}}>
+            <Image source={xIcon} style={{width: 24, height: 24}} />
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <Text style={styles.headerTitle}>{title}</Text>
+      )}
+
       <Image style={styles.leftArrowIcons} />
     </View>
   );
@@ -37,6 +68,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#000',
+  },
+  SearchTextInput: {
+    backgroundColor: '#F5F5F5',
+    width: 300,
+    height: 40,
+    paddingLeft: 15,
+    color: '#7B7B7B',
   },
 });
 

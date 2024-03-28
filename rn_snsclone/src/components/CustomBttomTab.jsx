@@ -83,7 +83,12 @@ const CustomBottomTab = ({state, navigation, insets, descriptors, name}) => {
                 ],
               }}
             />
-            <View style={{justifyContent: 'center',alignItems: 'center',paddingTop: 4}}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingTop: 4,
+              }}>
               <Text style={{fontSize: 12}}>{route.name}</Text>
             </View>
           </TouchableOpacity>
