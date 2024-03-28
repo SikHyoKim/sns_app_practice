@@ -336,6 +336,44 @@ export default function Detailfeed() {
                       </View>
                     </View>
                   </View>
+                  <View
+                    style={{
+                      paddingVertical: 23,
+                      paddingHorizontal: 16,
+                      borderTopWidth: 0.5,
+                      borderTopColor: '#E0E0E0',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}>
+                    <Image
+                      source={image_upload}
+                      style={{width: 30, height: 30}}
+                    />
+                    <TextInput
+                      placeholder="댓글을 입력하세요"
+                      style={{
+                        backgroundColor: '#F5F5F5',
+                        width: 261,
+                        height: 35,
+                        borderRadius: 4,
+                        borderWidth: 0.5,
+                        borderColor: '#F5F5F5',
+                        paddingHorizontal: 10,
+                      }}
+                    />
+                    <TouchableOpacity>
+                      <Text
+                        style={{
+                          fontSize: 15,
+                          fontWeight: '500',
+                          lineHeight: 21.72,
+                          color: '#C3C3C3',
+                        }}>
+                        등록
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               )}
             </View>
