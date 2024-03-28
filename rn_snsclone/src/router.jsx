@@ -8,6 +8,7 @@ import Splash from './pages/Splash';
 import Search from './pages/Search';
 import Chatting from './pages/Chatting';
 import Mypage from './pages/Mypage';
+import Detailfeed from './pages/Detailfeed';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -37,6 +38,7 @@ const router = () => {
       }}>
       <Stack.Screen name="Splash" component={Splash} />
       <Stack.Screen name="MainTab" component={MainTab} />
+      <Stack.Screen name="Detailfeed" component={Detailfeed} />
     </Stack.Navigator>
   );
 };
