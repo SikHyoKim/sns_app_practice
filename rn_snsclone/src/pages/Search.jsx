@@ -46,7 +46,7 @@ const Search = () => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#FFF'}}>
       <View>
-        <BasicHeader enableSearch={true} />
+        <BasicHeader enableSearch={true} dummy_data={dummy_search} />
       </View>
       <View style={{paddingVertical: 20, paddingLeft: 24, paddingRight: 25}}>
         {!dummy_search ? (

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -15,6 +15,7 @@ const xIcon = require('../assets/icons/search/close.png');
 const BasicHeader = ({title, enableSearch}) => {
   const navigation = useNavigation();
   const [text, setText] = useState('');
+
   return (
     <View style={styles.headerWrapper}>
       <TouchableOpacity onPress={() => navigation.replace('MainTab')}>
