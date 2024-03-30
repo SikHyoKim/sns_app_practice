@@ -49,7 +49,7 @@ const Search = () => {
         <BasicHeader enableSearch={true} dummy_data={dummy_search} />
       </View>
       <View style={{paddingVertical: 20, paddingLeft: 24, paddingRight: 25}}>
-        {!dummy_search ? (
+        {dummy_search ? (
           <View>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
