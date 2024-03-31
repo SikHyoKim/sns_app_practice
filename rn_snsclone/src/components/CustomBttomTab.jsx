@@ -39,6 +39,8 @@ const CustomBottomTab = ({state, navigation, insets, descriptors, name}) => {
               return bool ? bottombar_search_fill : bottombar_search;
             case '채팅':
               return bool ? bottombar_community_fill : bottombar_community;
+            case '추가':
+              return bottombar_add;
             default:
               return bool ? bottombar_mypage_fill : bottombar_mypage;
           }
@@ -106,6 +108,7 @@ const bottombar_mypage_fill = require('../assets/icons/bottomtabs/bottombar_mypa
 const bottombar_mypage = require('../assets/icons/bottomtabs/bottombar_mypage.png');
 const bottombar_community_fill = require('../assets/icons/bottomtabs/bottombar_community_fill.png');
 const bottombar_community = require('../assets/icons/bottomtabs/bottombar_community.png');
+const bottombar_add = require('../assets/icons/bottomtabs/bottombar_add.png');
 
 const styles = StyleSheet.create({
   bottomTabBarWrapper: {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   FlatList,
   Image,
@@ -12,116 +12,12 @@ import {
 import OptionHeader from '../components/OptionHeader';
 
 const {width} = Dimensions.get('window');
-
 const Mypage = () => {
   const renderPostWidthFlatList = ({item}) => {
     // console.log(item.post[0].img);
     return (
-      <View style={{flexDirection: 'row',padding: 1}}>
+      <View style={{flexDirection: 'row', padding: 1}}>
         <Image source={item.img} style={styles.posts} />
-      </View>
-    );
-  };
-
-  const renderItem = ({item}) => {
-    return (
-      <View>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingHorizontal: 22,
-            paddingVertical: 21,
-            gap: 16,
-          }}>
-          <View>
-            <Image
-              source={{uri: item.profileImg}}
-              style={{width: 90, height: 90, borderRadius: 50}}
-            />
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              flex: 1,
-            }}>
-            {/* 게시글, 팔로워, 팔로잉 */}
-            <View style={{paddingLeft: 24}}>
-              <TouchableOpacity
-                style={{
-                  alignItems: 'center',
-                  gap: 2,
-                }}>
-                <Text
-                  style={
-                    Object.keys(item.post).length === 0
-                      ? styles.notExistNum
-                      : styles.existsNum
-                  }>
-                  {Object.keys(item.post).length}
-                </Text>
-                <Text
-                  style={{fontSize: 16, lineHeight: 20.27, fontWeight: '600'}}>
-                  게시글
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View>
-              <TouchableOpacity
-                style={{
-                  alignItems: 'center',
-                  gap: 2,
-                }}>
-                <Text
-                  style={
-                    item.follow === 0 ? styles.notExistNum : styles.existsNum
-                  }>
-                  {item.follow}
-                </Text>
-                <Text
-                  style={{fontSize: 16, lineHeight: 20.27, fontWeight: '600'}}>
-                  팔로워
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View>
-              <TouchableOpacity
-                style={{
-                  alignItems: 'center',
-                  gap: 2,
-                }}>
-                <Text
-                  style={
-                    item.following === 0 ? styles.notExistNum : styles.existsNum
-                  }>
-                  {item.following}
-                </Text>
-                <Text
-                  style={{fontSize: 16, lineHeight: 20.27, fontWeight: '600'}}>
-                  팔로잉
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-        <View
-          style={{
-            paddingHorizontal: 24,
-            borderBottomWidth: 0.5,
-            paddingBottom: 21,
-            borderBottomColor: '#E0E0E0',
-          }}>
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: '400',
-              lineHeight: 20.27,
-              color: '#3A3A3A',
-            }}>
-            {item.name} {item.statusMessages}
-          </Text>
-        </View>
       </View>
     );
   };
@@ -133,15 +29,123 @@ const Mypage = () => {
           <OptionHeader title={my_dummy_data[0].name} />
         </View>
         <View>
-          <FlatList
-            scrollEnabled={false}
-            data={my_dummy_data}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-          />
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                paddingHorizontal: 22,
+                paddingVertical: 21,
+                gap: 16,
+              }}>
+              <View>
+                <Image
+                  source={{uri: my_dummy_data[0].profileImg}}
+                  style={{width: 90, height: 90, borderRadius: 50}}
+                />
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flex: 1,
+                }}>
+                {/* 게시글, 팔로워, 팔로잉 */}
+                <View style={{paddingLeft: 24}}>
+                  <TouchableOpacity
+                    style={{
+                      alignItems: 'center',
+                      gap: 2,
+                    }}>
+                    <Text
+                      style={
+                        my_dummy_data[0].post.length === 0
+                          ? styles.notExistNum
+                          : styles.existsNum
+                      }>
+                      {my_dummy_data[0].post.length}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        lineHeight: 20.27,
+                        fontWeight: '600',
+                      }}>
+                      게시글
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <TouchableOpacity
+                    style={{
+                      alignItems: 'center',
+                      gap: 2,
+                    }}>
+                    <Text
+                      style={
+                        my_dummy_data[0].follow === 0
+                          ? styles.notExistNum
+                          : styles.existsNum
+                      }>
+                      {my_dummy_data[0].follow}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        lineHeight: 20.27,
+                        fontWeight: '600',
+                      }}>
+                      팔로워
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <TouchableOpacity
+                    style={{
+                      alignItems: 'center',
+                      gap: 2,
+                    }}>
+                    <Text
+                      style={
+                        my_dummy_data[0].following === 0
+                          ? styles.notExistNum
+                          : styles.existsNum
+                      }>
+                      {my_dummy_data[0].following}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        lineHeight: 20.27,
+                        fontWeight: '600',
+                      }}>
+                      팔로잉
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                paddingHorizontal: 24,
+                borderBottomWidth: 0.5,
+                paddingBottom: 21,
+                borderBottomColor: '#E0E0E0',
+              }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: '400',
+                  lineHeight: 20.27,
+                  color: '#3A3A3A',
+                }}>
+                {my_dummy_data[0].name} {my_dummy_data[0].statusMessages}
+              </Text>
+            </View>
+          </View>
         </View>
         {/* 나의 게시글 */}
-        <View style={{flex: 1,paddingBottom: 50}}>
+        <View style={{flex: 1, paddingBottom: 50}}>
           <FlatList
             data={my_dummy_data[0].post}
             renderItem={renderPostWidthFlatList}

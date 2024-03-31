@@ -4,7 +4,7 @@ import {View, Text, Image} from 'react-native';
 const Splash = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('MainTab');
+      navigation.replace('LogIn');
     }, 2000);
   }, []);
 

@@ -12,15 +12,21 @@ import {useNavigation} from '@react-navigation/native';
 const leftArrow = require('../assets/icons/basicheader/leftArrow.png');
 const xIcon = require('../assets/icons/search/close.png');
 
-const BasicHeader = ({title, enableSearch}) => {
+const BasicHeader = ({title, enableSearch, leftArrowOption}) => {
   const navigation = useNavigation();
   const [text, setText] = useState('');
 
   return (
     <View style={styles.headerWrapper}>
-      <TouchableOpacity onPress={() => navigation.replace('MainTab')}>
-        <Image style={styles.leftArrowIcons} source={leftArrow} />
-      </TouchableOpacity>
+      {leftArrowOption === false ? (
+        <View>
+          <View style={{width: 32, height: 32}} />
+        </View>
+      ) : (
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Image style={styles.leftArrowIcons} source={leftArrow} />
+        </TouchableOpacity>
+      )}
       {enableSearch ? (
         <View
           style={{
