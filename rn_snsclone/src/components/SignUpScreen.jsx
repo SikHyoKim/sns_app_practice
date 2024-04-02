@@ -34,8 +34,12 @@ const SignUpScreen = () => {
     // 400에러 날경우 - 이메일 : 이메일 형식 , 비밀번호 : 특문,영어 대/소 문자 1자 이상, 숫자 1개이상, 닉네임 : 영어 소문자만
     try {
       const response = await api.post(apiUrl, userData);
-      Alert.alert('회원가입 성공!', '환영합니다!', response);
-      navigation.navigate('LogIn');
+      Alert.alert(
+        '회원가입 성공!',
+        '환영합니다',
+        response,
+        navigation.navigate('LogIn'),
+      );
     } catch (error) {
       Alert.alert('오류 발생', error.message, error.reason);
       console.log(error);

@@ -35,12 +35,9 @@ const LogIn = ({navigation}) => {
       if (response) {
         Alert.alert('로그인 성공!', '환영합니다!');
         navigation.navigate('MainTab');
-      } else {
-        console.log('false');
-        console.log(response.state, response.problem, response.status);
       }
     } catch (error) {
-      Alert.alert('오류 발생', error.message, error.reason);
+      Alert.alert('이메일과 비밀번호를 올바르게 작성해주세요.');
       console.log(error);
     }
   };

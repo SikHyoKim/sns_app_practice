@@ -26,7 +26,7 @@ export default function Detailfeed() {
       <ScrollView>
         <View style={{flex: 1, backgroundColor: '#FFF'}}>
           <View>
-            <BasicHeader title={'상세페이지'} />
+            <BasicHeader title={'상세페이지'} leftArrowOption={true} />
             <View
               style={{
                 flexDirection: 'row',

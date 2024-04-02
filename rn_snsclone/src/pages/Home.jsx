@@ -1,22 +1,46 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   FlatList,
   Image,
+  RefreshControl,
   SafeAreaView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import api from '../api/axios';
 
 const Home = () => {
   const navigation = useNavigation();
   const {width} = Dimensions.get('window');
-  const [isClicked, setIsClicked] = useState(dummy_feed);
-  const renderItem = ({item, index}) => {
+  const [isClicked, setIsClicked] = useState(feeds);
+  const [feeds, setFeeds] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    getFeed();
+  }, []);
+
+  const getFeed = async () => {
+    const apiUrl = '/feed';
+    try {
+      const response = await api.get(apiUrl);
+      if (response) {
+        setFeeds(response.data.result.content);
+      } else {
+        console.log('모르겠숴..');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const renderItem = ({item}) => {
+    console.log(item);
+
     const detailItemClick = clickedId => {
-      const selectedItem = dummy_feed.find(item => item.id === clickedId);
+      const selectedItem = item.id.find(item => item.id === clickedId);
       navigation.replace('Detailfeed', {selectedItem});
     };
     const toggleLike = id => {
@@ -28,6 +52,7 @@ const Home = () => {
       });
       setIsClicked(newData);
     };
+    console.log(`${item.images[0]}`);
 
     return (
       <View>
@@ -41,8 +66,11 @@ const Home = () => {
           }}>
           <TouchableOpacity
             style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
-            <Image source={profile} style={{width: 32, height: 32}} />
-            <Text>{item.name}</Text>
+            <Image
+              source={{uri: `${item.imgaes}`}}
+              style={{width: 32, height: 32}}
+            />
+            <Text>{item.nickname}</Text>
           </TouchableOpacity>
           <TouchableOpacity>
             <Image source={moremenu} style={{width: 24, height: 24}} />
@@ -52,7 +80,7 @@ const Home = () => {
           onPress={() => detailItemClick(item.id)}
           style={{gap: 8, alignItems: 'center'}}>
           <Image
-            source={{uri: item.feedImg}}
+            source={{uri: `${item.images[0]}`}}
             style={{width: width - 32, height: 343, borderRadius: 8}}
           />
         </TouchableOpacity>
@@ -72,14 +100,14 @@ const Home = () => {
               <Image source={favorite} style={{width: 24, height: 24}} />
             )}
             <Text style={{fontSize: 14, lineHeight: 14, fontWeight: '400'}}>
-              {item.like}
+              {item.emotions.total}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
             <Image source={mode_comment} style={{width: 23, height: 23}} />
             <Text style={{fontSize: 14, lineHeight: 14, fontWeight: '400'}}>
-              {item.comment}
+              {item.replys.length}
             </Text>
           </TouchableOpacity>
         </View>
@@ -122,71 +150,31 @@ const Home = () => {
         </View>
         {/* FEED */}
         <FlatList
-          data={dummy_feed}
+          data={feeds}
           renderItem={renderItem}
           keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
           removeClippedSubviews
           style={{marginBottom: 80}}
           extraData={isClicked}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={async () => {
+                await getFeed();
+                setRefreshing(false);
+              }}
+            />
+          }
         />
       </View>
     </SafeAreaView>
   );
 };
 
-const profile = require('../assets/imgs/Homeimgs/_Avatar_.png');
 const moremenu = require('../assets/icons/HomeIcons/more_horiz.png');
-const homefeed = require('../assets/imgs/Homeimgs/photo.png');
 const favorite = require('../assets/icons/HomeIcons/favorite.png');
 const mode_comment = require('../assets/icons/HomeIcons/mode_comment.png');
 const heartfill = require('../assets/icons/HomeIcons/heart-fill.png');
-
-const dummy_feed = [
-  {
-    id: 1,
-    name: 'Jeongtaeyoung_5812',
-    profileImg: 'https://avatar.iran.liara.run/public',
-    feedImg: 'https://picsum.photos/id/1/400/400',
-    contents: '오운완',
-    like: 27,
-    comment: 14,
-    time: '5분 전',
-    onlike: false,
-  },
-  {
-    id: 2,
-    name: 'Jeongtaeyoung_5812',
-    profileImg: 'https://avatar.iran.liara.run/public',
-    feedImg: 'https://picsum.photos/id/2/400/400',
-    contents: '오늘은 어떤운동',
-    like: 17,
-    comment: 1,
-    time: '50분 전',
-    onlike: false,
-  },
-  {
-    id: 3,
-    name: 'Jeongtaeyoung_5812',
-    profileImg: 'https://avatar.iran.liara.run/public',
-    feedImg: 'https://picsum.photos/id/3/400/400',
-    contents: '운동 좋아',
-    like: 307,
-    comment: 4,
-    time: '10분 전',
-    onlike: false,
-  },
-  {
-    id: 4,
-    name: 'Jeongtaeyoung_5812',
-    profileImg: 'https://avatar.iran.liara.run/public',
-    feedImg: 'https://picsum.photos/id/4/400/400',
-    contents: '운동 힘들어',
-    like: 337,
-    comment: 140,
-    time: '1시간 전',
-    onlike: false,
-  },
-];
 
 export default Home;

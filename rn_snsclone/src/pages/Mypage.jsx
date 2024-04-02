@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -9,10 +9,30 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
+import api from '../api/axios';
 import OptionHeader from '../components/OptionHeader';
 
 const {width} = Dimensions.get('window');
 const Mypage = () => {
+  const [feeds, setFeeds] = useState([]);
+
+  useEffect(() => {
+    getFeed();
+  }, []);
+  console.log(feeds);
+  const getFeed = async () => {
+    const apiUrl = '/accounts/info';
+    try {
+      const response = await api.get(apiUrl);
+      if (response) {
+        setFeeds(response.data.result);
+      } else {
+        console.log('모르겠숴..');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const renderPostWidthFlatList = ({item}) => {
     // console.log(item.post[0].img);
     return (
@@ -26,7 +46,7 @@ const Mypage = () => {
     <SafeAreaView style={{flex: 1, backgroundColor: '#FFF'}}>
       <View style={{flex: 1}}>
         <View>
-          <OptionHeader title={my_dummy_data[0].name} />
+          <OptionHeader title={feeds} />
         </View>
         <View>
           <View>
@@ -147,7 +167,7 @@ const Mypage = () => {
         {/* 나의 게시글 */}
         <View style={{flex: 1, paddingBottom: 50}}>
           <FlatList
-            data={my_dummy_data[0].post}
+            data={feeds}
             renderItem={renderPostWidthFlatList}
             numColumns={3}
             keyExtractor={item => item.id}
