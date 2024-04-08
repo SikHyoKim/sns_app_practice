@@ -18,7 +18,6 @@ const Home = () => {
   const [isClicked, setIsClicked] = useState(feeds);
   const [feeds, setFeeds] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-
   useEffect(() => {
     getFeed();
   }, []);
@@ -52,7 +51,6 @@ const Home = () => {
       });
       setIsClicked(newData);
     };
-    console.log(`${item.images[0]}`);
 
     return (
       <View>
@@ -67,7 +65,7 @@ const Home = () => {
           <TouchableOpacity
             style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
             <Image
-              source={{uri: `${item.imgaes}`}}
+              source={{uri: `${item.imgaes[0]}`}}
               style={{width: 32, height: 32}}
             />
             <Text>{item.nickname}</Text>
