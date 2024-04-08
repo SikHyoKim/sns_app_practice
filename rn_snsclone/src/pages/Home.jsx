@@ -22,6 +22,7 @@ const Home = () => {
     getFeed();
   }, []);
 
+
   const getFeed = async () => {
     const apiUrl = '/feed';
     try {
@@ -36,10 +37,8 @@ const Home = () => {
     }
   };
   const renderItem = ({item}) => {
-    console.log(item);
-
     const detailItemClick = clickedId => {
-      const selectedItem = item.id.find(item => item.id === clickedId);
+      const selectedItem = clickedId;
       navigation.replace('Detailfeed', {selectedItem});
     };
     const toggleLike = id => {
@@ -64,10 +63,7 @@ const Home = () => {
           }}>
           <TouchableOpacity
             style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
-            <Image
-              source={{uri: `${item.imgaes[0]}`}}
-              style={{width: 32, height: 32}}
-            />
+            <Image source={heartfill} style={{width: 32, height: 32}} />
             <Text>{item.nickname}</Text>
           </TouchableOpacity>
           <TouchableOpacity>
