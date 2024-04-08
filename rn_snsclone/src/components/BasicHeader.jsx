@@ -23,7 +23,7 @@ const BasicHeader = ({title, enableSearch, leftArrowOption}) => {
           <View style={{width: 32, height: 32}} />
         </View>
       ) : (
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.replace('MainTab')}>
           <Image style={styles.leftArrowIcons} source={leftArrow} />
         </TouchableOpacity>
       )}

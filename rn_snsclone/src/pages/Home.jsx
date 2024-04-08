@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import api from '../api/axios';
+import moment from 'moment';
 
 const Home = () => {
   const navigation = useNavigation();
@@ -21,7 +22,6 @@ const Home = () => {
   useEffect(() => {
     getFeed();
   }, []);
-
 
   const getFeed = async () => {
     const apiUrl = '/feed';
@@ -41,15 +41,23 @@ const Home = () => {
       const selectedItem = clickedId;
       navigation.replace('Detailfeed', {selectedItem});
     };
-    const toggleLike = id => {
-      const newData = isClicked.map(item => {
-        if (item.id === id) {
-          return {...item, onlike: !item.onlike};
-        }
-        return item;
-      });
-      setIsClicked(newData);
-    };
+
+    // 게시물 업로드 시간 나타내기
+    const givenTime = item.replys[0]?.createDate;
+    const currentTime = moment();
+    const givenMoment = moment(givenTime);
+
+    const diffHours = currentTime.diff(givenMoment, 'hours');
+    const diffDays = currentTime.diff(givenMoment, 'days');
+
+    let result;
+    if (diffHours < 24) {
+      result = `${diffHours}시간 전`;
+    } else {
+      result = `${diffDays}일 전`;
+    }
+
+    console.log(item);
 
     return (
       <View>
@@ -63,20 +71,28 @@ const Home = () => {
           }}>
           <TouchableOpacity
             style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
-            <Image source={heartfill} style={{width: 32, height: 32}} />
+            <Image
+              source={{uri: item.images[0]}}
+              style={{width: 32, height: 32}}
+            />
             <Text>{item.nickname}</Text>
           </TouchableOpacity>
           <TouchableOpacity>
             <Image source={moremenu} style={{width: 24, height: 24}} />
           </TouchableOpacity>
         </View>
+
         <TouchableOpacity
           onPress={() => detailItemClick(item.id)}
           style={{gap: 8, alignItems: 'center'}}>
-          <Image
-            source={{uri: `${item.images[0]}`}}
-            style={{width: width - 32, height: 343, borderRadius: 8}}
-          />
+          {item.images[0] ? (
+            <Image
+              source={{uri: item.images[1]}}
+              style={{width: width - 32, height: 343, borderRadius: 8}}
+            />
+          ) : (
+            <Text>이미지를 불러올 수 없습니다.</Text>
+          )}
         </TouchableOpacity>
         <View
           style={{
@@ -86,7 +102,7 @@ const Home = () => {
             paddingHorizontal: 16,
           }}>
           <TouchableOpacity
-            onPress={() => toggleLike(item.id)}
+            // onPress={() => toggleLike(item.id)}
             style={{flexDirection: 'row', gap: 5, alignItems: 'center'}}>
             {item.onlike ? (
               <Image source={heartfill} style={{width: 24, height: 24}} />
@@ -119,7 +135,7 @@ const Home = () => {
                 fontWeight: '400',
                 color: '#BBBBBB',
               }}>
-              {item.time}
+              {result}
             </Text>
           </View>
         </View>
